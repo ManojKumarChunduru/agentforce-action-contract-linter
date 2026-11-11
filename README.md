@@ -144,6 +144,14 @@ and dropped the badge above it, which is the one thing the screenshot exists to 
 now starts at the top of the page, and the tool reads the badge's computed colours back so an
 invisible verdict fails the capture.
 
+**The dash test exempted itself.** The hygiene test that sweeps every file for em and en dashes
+listed files with `git ls-files`, which lists tracked files only. The test file was untracked
+when it first ran, so it skipped the one file in the repository that contained the characters it
+was looking for (its own source, where they had been written as literals). It passed in the
+working checkout and failed in the fresh clone made for the pre-delivery check, which is the
+whole reason that check exists. The sweep now includes untracked files and the characters are
+built with `chr()`.
+
 ## Architecture
 
 <img src="docs/assets/architecture.svg" alt="SFDX project metadata flows through project.py into four extractors, then targets.py, contracts.py, report.py and cli.py" width="100%">

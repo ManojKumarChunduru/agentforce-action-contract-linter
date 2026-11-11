@@ -9,11 +9,19 @@ from tests.conftest import REPO_ROOT
 
 README = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
 REPO_NAME = "agentforce-action-contract-linter"
+EM_DASH = chr(0x2014)
+EN_DASH = chr(0x2013)
 
 
 def tracked_text_files():
+    # tracked and untracked alike: a test file that only checks tracked files exempts itself
+    # until its first commit, which is how this test passed once while containing a dash
     out = subprocess.run(
-        ["git", "ls-files"], cwd=REPO_ROOT, capture_output=True, text=True, check=False
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
     ).stdout.split()
     for rel in out:
         p = REPO_ROOT / rel
@@ -27,7 +35,7 @@ def test_no_em_or_en_dashes_anywhere_in_tracked_text():
     offenders = []
     for p in tracked_text_files():
         text = p.read_text(encoding="utf-8", errors="replace")
-        if "—" in text or "–" in text:
+        if EM_DASH in text or EN_DASH in text:
             offenders.append(str(p.relative_to(REPO_ROOT)))
     assert offenders == []
 
