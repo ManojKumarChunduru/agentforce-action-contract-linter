@@ -1,0 +1,23 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "accountId"
+  ],
+  "properties": {
+    "accountId": {
+      "title": "Account Id",
+      "description": "Account to look up",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "monthsBack": {
+      "title": "Months back",
+      "description": "How many months of history",
+      "lightning:type": "lightning__integerType"
+    },
+    "includeCancelled": {
+      "title": "Include cancelled",
+      "description": "Whether to include cancelled orders",
+      "lightning:type": "lightning__booleanType"
+    }
+  }
+}

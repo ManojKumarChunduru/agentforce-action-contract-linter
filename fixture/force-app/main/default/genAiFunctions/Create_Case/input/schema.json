@@ -1,0 +1,30 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "subject",
+    "description",
+    "contactId"
+  ],
+  "properties": {
+    "subject": {
+      "title": "Subject",
+      "description": "Short summary of the issue",
+      "lightning:type": "lightning__textType"
+    },
+    "description": {
+      "title": "Description",
+      "description": "Full description of the issue",
+      "lightning:type": "lightning__multilineTextType"
+    },
+    "contactId": {
+      "title": "Contact Id",
+      "description": "The contact the case belongs to",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "priority": {
+      "title": "Priority",
+      "description": "Low, Medium or High",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

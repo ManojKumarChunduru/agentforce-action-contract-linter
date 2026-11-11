@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Record Id of the created case",
+      "lightning:type": "lightning__recordIdType",
+      "copilotAction:isUsedByPlanner": true
+    },
+    "caseNumber": {
+      "title": "Case number",
+      "description": "Number to quote to the customer",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

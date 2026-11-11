@@ -437,8 +437,7 @@ def reconcile(project: Project, name_only: bool = False) -> LintReport:
                     "missing_target",
                     action=action.name,
                     message=(
-                        f"{action.invocation_target_type} target "
-                        f"{action.invocation_target!r}: {detail}"
+                        f"{action.invocation_target_type} target {action.invocation_target!r}"
                     ),
                     target=action.invocation_target,
                     target_type=action.invocation_target_type,

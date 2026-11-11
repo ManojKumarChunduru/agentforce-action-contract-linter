@@ -1,0 +1,19 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "contactId",
+    "surveyType"
+  ],
+  "properties": {
+    "contactId": {
+      "title": "Contact Id",
+      "description": "Contact to survey",
+      "lightning:type": "lightning__textType"
+    },
+    "surveyType": {
+      "title": "Survey type",
+      "description": "CSAT or NPS",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

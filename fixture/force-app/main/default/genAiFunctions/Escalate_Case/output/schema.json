@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "escalationId": {
+      "title": "Escalation Id",
+      "description": "Id of the escalation record",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true
+    },
+    "queueName": {
+      "title": "Queue",
+      "description": "Queue the case was routed to",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

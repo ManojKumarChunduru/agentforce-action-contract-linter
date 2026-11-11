@@ -1,0 +1,12 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "draft": {
+      "title": "Draft",
+      "description": "The drafted reply",
+      "lightning:type": "lightning__richTextType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

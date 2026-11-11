@@ -1,0 +1,25 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseId"
+  ],
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Case to reply on",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "tone": {
+      "title": "Tone",
+      "description": "Formal, Friendly or Brief",
+      "lightning:type": "lightning__textType",
+      "maxLength": 50
+    },
+    "extraContext": {
+      "title": "Extra context",
+      "description": "Anything the reply should mention",
+      "lightning:type": "lightning__multilineTextType",
+      "maxLength": 2000
+    }
+  }
+}

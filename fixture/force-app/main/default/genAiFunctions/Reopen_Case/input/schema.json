@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseId"
+  ],
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Case to reopen",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "reason": {
+      "title": "Reason",
+      "description": "Why it is being reopened",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

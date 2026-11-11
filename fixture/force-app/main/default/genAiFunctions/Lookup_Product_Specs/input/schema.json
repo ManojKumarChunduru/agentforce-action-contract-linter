@@ -1,0 +1,13 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "productCode"
+  ],
+  "properties": {
+    "productCode": {
+      "title": "Product code",
+      "description": "SKU or product code",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

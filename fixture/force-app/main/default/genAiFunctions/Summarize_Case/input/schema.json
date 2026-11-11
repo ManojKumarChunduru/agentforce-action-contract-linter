@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseId"
+  ],
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Case to summarise",
+      "lightning:type": "lightning__textType"
+    },
+    "maxSentences": {
+      "title": "Max sentences",
+      "description": "Upper bound on sentences",
+      "lightning:type": "lightning__integerType"
+    }
+  }
+}

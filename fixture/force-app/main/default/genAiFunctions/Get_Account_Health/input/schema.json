@@ -1,0 +1,13 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "accountId"
+  ],
+  "properties": {
+    "accountId": {
+      "title": "Account Id",
+      "description": "Account to score",
+      "lightning:type": "lightning__recordIdType"
+    }
+  }
+}

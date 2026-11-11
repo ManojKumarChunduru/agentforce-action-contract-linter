@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseRecord"
+  ],
+  "properties": {
+    "caseRecord": {
+      "title": "Case",
+      "description": "The case record",
+      "lightning:type": "lightning__textType"
+    },
+    "preferredTime": {
+      "title": "Preferred time",
+      "description": "When the customer wants the call",
+      "lightning:type": "lightning__dateTimeType"
+    }
+  }
+}

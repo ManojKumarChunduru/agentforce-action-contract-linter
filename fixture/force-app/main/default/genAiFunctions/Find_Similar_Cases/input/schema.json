@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseId"
+  ],
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Reference case",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "limitCount": {
+      "title": "Limit",
+      "description": "Maximum results",
+      "lightning:type": "lightning__integerType"
+    }
+  }
+}

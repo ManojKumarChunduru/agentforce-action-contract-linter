@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Help customers with the status and content of their cases.</description>
+    <developerName>Case_Management</developerName>
+    <genAiFunctions>
+        <functionName>Get_Case_Status</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Create_Case</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Summarize_Case</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Escalate_Case</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Find_Similar_Cases</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Draft_Customer_Reply</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Always confirm the case number with the customer before sharing status.</description>
+        <developerName>Case_Management_instruction0</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>Case_Management instruction 0</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Escalate only when the customer explicitly asks or the priority level is 4 or higher.</description>
+        <developerName>Case_Management_instruction1</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>Case_Management instruction 1</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Never promise a resolution date.</description>
+        <developerName>Case_Management_instruction2</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>Case_Management instruction 2</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Case Management</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to answer questions about existing cases, open new ones, escalate when needed and draft replies.</scope>
+</GenAiPlugin>

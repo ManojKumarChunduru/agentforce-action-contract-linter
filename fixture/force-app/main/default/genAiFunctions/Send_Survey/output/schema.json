@@ -1,0 +1,17 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "sent": {
+      "title": "Sent",
+      "description": "Whether the survey was sent",
+      "lightning:type": "lightning__booleanType",
+      "copilotAction:isUsedByPlanner": true
+    },
+    "surveyId": {
+      "title": "Survey Id",
+      "description": "Id of the survey record",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseNumber"
+  ],
+  "properties": {
+    "caseNumber": {
+      "title": "Case record number",
+      "description": "The case number shown to the customer",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUserInput": true
+    }
+  }
+}

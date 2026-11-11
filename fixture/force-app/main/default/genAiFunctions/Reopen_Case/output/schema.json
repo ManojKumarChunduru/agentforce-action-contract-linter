@@ -1,0 +1,11 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "reopened": {
+      "title": "Reopened",
+      "description": "Whether the case was reopened",
+      "lightning:type": "lightning__booleanType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "contactId",
+    "optIn"
+  ],
+  "properties": {
+    "contactId": {
+      "title": "Contact Id",
+      "description": "Contact to update",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "channel": {
+      "title": "Channel",
+      "description": "Email, SMS or Phone",
+      "lightning:type": "lightning__textType"
+    },
+    "optIn": {
+      "title": "Opt in",
+      "description": "True to opt in, false to opt out",
+      "lightning:type": "lightning__booleanType"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "note": "Ground truth for the fixture org. Every entry was planted on purpose; tests assert the linter reports exactly this set and nothing else.",
+  "actions_total": 16,
+  "topics_total": 4,
+  "planners_total": 1,
+  "clean_actions": ["Get_Case_Status", "Create_Case", "Send_Survey"],
+  "decoys": [
+    {
+      "action": "Get_Case_Status",
+      "why": "the Apex label is 'Case Number' and the schema title is 'Case record number'; name and type agree, so a linter that compared labels would report a drift that is not there"
+    }
+  ],
+  "findings": [
+    {"drift_class": "type_mismatch", "action": "Escalate_Case", "property_name": "priorityLevel", "detail_prefix": "narrowed"},
+    {"drift_class": "type_mismatch", "action": "Summarize_Case", "property_name": "caseId", "detail_prefix": "weakened"},
+    {"drift_class": "missing_target", "action": "Track_Shipment", "property_name": "", "detail_prefix": "not in project"},
+    {"drift_class": "orphan_input", "action": "Get_Order_History", "property_name": "includeCancelled", "detail_prefix": ""},
+    {"drift_class": "uncovered_input", "action": "Cancel_Order", "property_name": "cancellationReason", "detail_prefix": ""},
+    {"drift_class": "missing_required_input", "action": "Update_Contact_Preferences", "property_name": "channel", "detail_prefix": "optional_in_schema"},
+    {"drift_class": "no_planner_output", "action": "Find_Similar_Cases", "property_name": "", "detail_prefix": ""},
+    {"drift_class": "orphan_output", "action": "Get_Account_Health", "property_name": "riskLevel", "detail_prefix": ""},
+    {"drift_class": "text_cap_exceeded", "action": "Draft_Customer_Reply", "property_name": "extraContext", "detail_prefix": "2000"},
+    {"drift_class": "target_inactive", "action": "Lookup_Product_Specs", "property_name": "", "detail_prefix": ""},
+    {"drift_class": "unreachable_action", "action": "Reopen_Case", "property_name": "", "detail_prefix": ""},
+    {"drift_class": "dangling_topic_function", "action": "Apply_Discount", "property_name": "", "detail_prefix": ""}
+  ],
+  "undecidable": [
+    {"action": "Merge_Duplicate_Contacts", "variable": "primary", "side": "input", "declared_type": "Contact"},
+    {"action": "Schedule_Callback", "variable": "caseRecord", "side": "input", "declared_type": "SObject<Case>"}
+  ]
+}

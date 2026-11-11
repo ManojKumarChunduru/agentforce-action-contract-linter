@@ -1,0 +1,24 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "caseId",
+    "reason"
+  ],
+  "properties": {
+    "caseId": {
+      "title": "Case Id",
+      "description": "Case to escalate",
+      "lightning:type": "lightning__textType"
+    },
+    "reason": {
+      "title": "Reason",
+      "description": "Why the case is being escalated",
+      "lightning:type": "lightning__textType"
+    },
+    "priorityLevel": {
+      "title": "Priority level",
+      "description": "1 to 5",
+      "lightning:type": "lightning__integerType"
+    }
+  }
+}

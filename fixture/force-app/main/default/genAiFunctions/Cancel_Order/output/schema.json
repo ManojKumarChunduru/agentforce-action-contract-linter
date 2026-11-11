@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "cancelled": {
+      "title": "Cancelled",
+      "description": "Whether the order was cancelled",
+      "lightning:type": "lightning__booleanType",
+      "copilotAction:isUsedByPlanner": true
+    },
+    "refundAmount": {
+      "title": "Refund amount",
+      "description": "Amount refunded",
+      "lightning:type": "lightning__numberType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

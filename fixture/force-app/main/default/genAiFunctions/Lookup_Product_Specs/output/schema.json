@@ -1,0 +1,12 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "specsSummary": {
+      "title": "Specs summary",
+      "description": "Short specification summary",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

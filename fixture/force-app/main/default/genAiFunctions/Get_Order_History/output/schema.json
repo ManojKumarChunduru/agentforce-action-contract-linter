@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "orderSummaries": {
+      "title": "Order summaries",
+      "description": "One line per order",
+      "lightning:type": "lightning__listType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    },
+    "totalOrders": {
+      "title": "Total orders",
+      "description": "Count of orders returned",
+      "lightning:type": "lightning__integerType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

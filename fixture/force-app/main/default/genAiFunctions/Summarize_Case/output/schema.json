@@ -1,0 +1,12 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "summary": {
+      "title": "Summary",
+      "description": "Plain-text summary",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

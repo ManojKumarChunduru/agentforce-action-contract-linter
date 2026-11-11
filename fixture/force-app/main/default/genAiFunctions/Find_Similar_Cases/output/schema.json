@@ -1,0 +1,17 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "similarCaseIds": {
+      "title": "Similar case Ids",
+      "description": "Ids of similar cases",
+      "lightning:type": "lightning__listType",
+      "copilotAction:isDisplayable": true
+    },
+    "similarityNote": {
+      "title": "Similarity note",
+      "description": "How the match was made",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

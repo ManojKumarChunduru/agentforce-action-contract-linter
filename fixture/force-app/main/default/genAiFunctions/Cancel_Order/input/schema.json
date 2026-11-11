@@ -1,0 +1,13 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "orderNumber"
+  ],
+  "properties": {
+    "orderNumber": {
+      "title": "Order number",
+      "description": "Order to cancel",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

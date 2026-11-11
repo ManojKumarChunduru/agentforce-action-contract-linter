@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Give service reps insight into an account.</description>
+    <developerName>Account_Insights</developerName>
+    <genAiFunctions>
+        <functionName>Get_Account_Health</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Update_Contact_Preferences</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Merge_Duplicate_Contacts</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Confirm with the rep before merging contacts.</description>
+        <developerName>Account_Insights_instruction0</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>Account_Insights instruction 0</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Summarise account health in one sentence.</description>
+        <developerName>Account_Insights_instruction1</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>Account_Insights instruction 1</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Account Insights</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to report account health, update contact preferences and clean up duplicate contacts.</scope>
+</GenAiPlugin>

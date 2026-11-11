@@ -1,0 +1,12 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "callbackId": {
+      "title": "Callback Id",
+      "description": "Id of the scheduled callback",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    }
+  }
+}

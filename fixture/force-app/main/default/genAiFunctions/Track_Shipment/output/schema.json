@@ -1,0 +1,17 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "trackingStatus": {
+      "title": "Tracking status",
+      "description": "Current status",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    },
+    "carrier": {
+      "title": "Carrier",
+      "description": "Shipping carrier",
+      "lightning:type": "lightning__textType"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "mergedId": {
+      "title": "Merged Id",
+      "description": "Id of the surviving contact",
+      "lightning:type": "lightning__recordIdType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

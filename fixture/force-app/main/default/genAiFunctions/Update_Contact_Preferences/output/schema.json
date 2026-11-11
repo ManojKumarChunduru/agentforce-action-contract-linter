@@ -1,0 +1,11 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "success": {
+      "title": "Success",
+      "description": "Whether the update succeeded",
+      "lightning:type": "lightning__booleanType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

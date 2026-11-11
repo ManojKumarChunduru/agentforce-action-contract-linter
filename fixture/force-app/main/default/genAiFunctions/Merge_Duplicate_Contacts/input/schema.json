@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "primary"
+  ],
+  "properties": {
+    "primary": {
+      "title": "Primary contact",
+      "description": "The contact to keep",
+      "lightning:type": "lightning__textType"
+    },
+    "duplicateIds": {
+      "title": "Duplicate Ids",
+      "description": "Contacts to merge into the primary",
+      "lightning:type": "lightning__listType"
+    }
+  }
+}

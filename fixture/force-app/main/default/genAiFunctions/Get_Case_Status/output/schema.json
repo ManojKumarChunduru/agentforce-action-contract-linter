@@ -1,0 +1,23 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "status": {
+      "title": "Status",
+      "description": "Current case status",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:isDisplayable": true
+    },
+    "priority": {
+      "title": "Priority",
+      "description": "Current case priority",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUsedByPlanner": true
+    },
+    "lastModified": {
+      "title": "Last modified",
+      "description": "When the case last changed",
+      "lightning:type": "lightning__dateTimeType"
+    }
+  }
+}
