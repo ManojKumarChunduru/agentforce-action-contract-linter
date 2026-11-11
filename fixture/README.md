@@ -23,7 +23,7 @@ class, and the test suite asserts the linter reports exactly this set.
 | Log_Interaction | InteractionLogger (Apex) | `channel` is `required=true` in Apex and has no schema property at all | `input/schema.json` |
 | Find_Similar_Cases | SimilarCaseFinder (Apex) | no output property is marked `copilotAction:isUsedByPlanner` | `output/schema.json` |
 | Get_Account_Health | AccountHealthScorer (Apex) | schema output `riskLevel` is never produced | `output/schema.json` |
-| Draft_Customer_Reply | ReplyDrafter (Apex) | `extraContext` declares `maxLength` 2000 against a documented cap of 250 | `input/schema.json` |
+| Draft_Customer_Reply | ReplyDrafter (Apex) | `extraContext` declares `maxLength` `2000` against a documented cap of 250 | `input/schema.json` |
 | Lookup_Product_Specs | Lookup_Product_Specs (Flow) | the Flow is in Draft status | `flows/Lookup_Product_Specs.flow-meta.xml` |
 | Schedule_Callback | Schedule_Callback (Flow) | undecidable: `caseRecord` is an SObject variable | `flows/Schedule_Callback.flow-meta.xml` |
 | Merge_Duplicate_Contacts | ContactMerger (Apex) | undecidable: `primary` is a `Contact` | `classes/ContactMerger.cls` |

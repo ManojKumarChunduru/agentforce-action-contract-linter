@@ -1,0 +1,92 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+
+      - name: Lint
+        run: |
+          python -m ruff check .
+          python -m ruff format --check .
+
+      - name: Tests
+        run: >
+          python -m pytest -q
+          --junitxml=reports/junit.xml
+          --cov=afcl --cov-branch
+          --cov-report=json:reports/coverage.json
+          --cov-report=xml:reports/coverage.xml
+          --cov-report=term-missing
+
+      - name: Coverage floor
+        run: |
+          python - <<'PY'
+          import json
+          t = json.load(open("reports/coverage.json"))["totals"]
+          pct = 100.0 * t["covered_lines"] / t["num_statements"]
+          print(f"line coverage {pct:.1f}%")
+          raise SystemExit(0 if pct >= 95.0 else f"line coverage {pct:.1f}% is below the 95% floor")
+          PY
+
+      - name: "Lint the fixture (expects exit code 1, drift found)"
+        run: |
+          set +e
+          python -m afcl lint fixture --format markdown --output reports/fixture-report.md
+          code=$?
+          set -e
+          echo "afcl exit code: $code"
+          test "$code" -eq 1
+          cat reports/fixture-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Experiments (re-measured from scratch)
+        run: make experiments
+
+      - name: Receipts (every published figure re-checked)
+        run: |
+          python tools/collect_metrics.py --skip-tests
+          python tools/check_numbers.py
+
+      - name: Severity evidence table to the job summary
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          e = json.load(open("docs/experiments/exp04_severity_evidence.json"))
+          print("\n## What the severity policy rests on\n")
+          print("| drift class | severity | evidence | fixture |")
+          print("| --- | --- | --- | --- |")
+          for r in e["rows"]:
+              print(f"| {r['drift_class']} | {r['severity']} | {r['evidence']} | {r['fixture_count']} |")
+          print(f"\n{e['classes_documented']} of {e['classes_total']} classes rest on a documented "
+                f"consequence; {e['fatal_inferred']} of {e['fatal_classes']} fatal classes are inferred.\n")
+          PY
+
+      - name: Experiment and report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: afcl-py${{ matrix.python-version }}
+          path: |
+            docs/experiments/*.json
+            docs/metrics.json
+            reports/
+          if-no-files-found: error
