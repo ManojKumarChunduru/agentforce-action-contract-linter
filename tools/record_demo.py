@@ -124,7 +124,7 @@ def transcode(webm: Path) -> None:
         ],
         check=True,
     )
-    filters = "fps=8,scale=880:-1:flags=lanczos"
+    filters = "fps=6,scale=800:-1:flags=lanczos"
     subprocess.run(
         [
             ffmpeg,
@@ -134,7 +134,7 @@ def transcode(webm: Path) -> None:
             "-i",
             str(webm),
             "-vf",
-            f"{filters},palettegen=max_colors=64",
+            f"{filters},palettegen=max_colors=48",
             str(palette),
         ],
         check=True,

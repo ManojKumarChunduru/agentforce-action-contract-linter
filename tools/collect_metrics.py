@@ -28,6 +28,9 @@ sys.path.insert(0, str(REPO / "src"))
 from afcl.contracts import DRIFT_CLASSES  # noqa: E402
 from afcl.schema import TEXT_CAP  # noqa: E402
 
+COVERAGE_FLOOR_PCT = 95.0
+"""The floor .github/workflows/ci.yml enforces; kept here so the README can quote it."""
+
 EXPERIMENT_SCRIPTS = [
     "exp01_drift_census.py",
     "exp02_name_only_review.py",
@@ -56,9 +59,9 @@ ANCHORS: dict[str, list[str]] = {
     "planted_drifts": ["{} planted drifts", "floor of 1/{}", "1/{} on this fixture"],
     "ground_truth_matched": ["{} of {planted_drifts} planted"],
     "name_only_visible": ["review sees {}", "sees {} of {findings_total}"],
-    "name_only_invisible": ["{} of {findings_total} findings", "misses {}", "{} invisible"],
+    "name_only_invisible": ["misses {}", "{} invisible", "the {} it misses"],
     "name_only_invisible_pct": ["{}% of the findings", "({}%) are invisible"],
-    "matched_pairs": ["{} matched pairs", "of {matched_pairs} pairs"],
+    "matched_pairs": ["{} matched pairs", "of {} pairs"],
     "undecidable_properties": ["{} undecidable properties", "{} properties it cannot"],
     "undecidable_actions": [
         "{} of {actions_total} actions are undecidable",
@@ -68,10 +71,11 @@ ANCHORS: dict[str, list[str]] = {
     "undecidable_pairs_pct": ["{}% of matched pairs"],
     "classes_documented": ["{} of {drift_classes_total} classes", "{} documented classes"],
     "classes_inferred": ["{} inferred classes", "{} are inferred"],
-    "fatal_classes": ["{} fatal classes", "of {fatal_classes} fatal"],
+    "fatal_classes": ["{} fatal classes", "of {} fatal"],
     "fatal_inferred": ["{} of {fatal_classes} fatal"],
     "fatal_documented": ["{} fatal class rests", "only {} of the fatal"],
     "text_cap": ["cap of {}", "{} characters"],
+    "coverage_floor_pct": ["{}% floor", "floor of {}%"],
 }
 
 
@@ -174,6 +178,7 @@ def main() -> int:
         "fatal_inferred": e4["fatal_inferred"],
         "fatal_documented": e4["fatal_documented"],
         "text_cap": TEXT_CAP,
+        "coverage_floor_pct": int(COVERAGE_FLOOR_PCT),
     }
     missing_anchor = [k for k in metrics if k not in ANCHORS]
     if missing_anchor:

@@ -59,6 +59,8 @@ def same(a: str, b: float | int) -> bool:
 
 def anchor_regex(anchor: str, metrics: dict) -> re.Pattern:
     """Turn '{} of {actions_total} actions' into a regex with one group for the metric's value."""
+    if anchor.count("{}") != 1:
+        raise SystemExit(f"anchor {anchor!r} must contain exactly one {{}} for the metric's value")
     parts = re.split(r"(\{[a-z_]*\})", anchor)
     out = []
     for part in parts:
