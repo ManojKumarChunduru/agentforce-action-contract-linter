@@ -1,0 +1,21 @@
+{
+  "report": "docs/evidence/report.html",
+  "images": [
+    {
+      "file": "report.png",
+      "from_heading": "top of page",
+      "to_heading": "undecidable"
+    },
+    {
+      "file": "report-undecidable.png",
+      "from_heading": "undecidable",
+      "to_heading": "end of page"
+    }
+  ],
+  "badge": {
+    "text": "DRIFT",
+    "colour": "rgb(255, 255, 255)",
+    "background": "rgb(207, 34, 46)",
+    "visible": true
+  }
+}

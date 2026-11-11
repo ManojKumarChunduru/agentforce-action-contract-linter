@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+html, body { margin: 0; background: #0f172a; color: #e2e8f0;
+             font: 15px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+#t { padding: 18px 22px; white-space: pre-wrap; word-break: break-word; height: 564px;
+     overflow: hidden; box-sizing: border-box; }
+.p { color: #38bdf8; } .c { color: #f8fafc; font-weight: 600; } .x { color: #64748b; }
+.fatal { color: #f87171; } .warn { color: #fbbf24; } .ok { color: #4ade80; }
+</style>
+</head>
+<body>
+<div id="t"></div>
+<script>
+const segs = __SEGMENTS__;
+const t = document.getElementById('t');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function colour(line) {
+  let h = line.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  h = h.replace(/\[fatal\]/g, '<span class="fatal">[fatal]</span>');
+  h = h.replace(/\[warn \]/g, '<span class="warn">[warn ]</span>');
+  h = h.replace(/\bDRIFT\b/g, '<span class="fatal">DRIFT</span>');
+  h = h.replace(/receipts ok/g, '<span class="ok">receipts ok</span>');
+  return h;
+}
+function trim() {
+  while (t.scrollHeight > t.clientHeight && t.firstChild) t.removeChild(t.firstChild);
+}
+async function run() {
+  await sleep(600);
+  for (const s of segs) {
+    const line = document.createElement('div');
+    line.innerHTML = '<span class="p">$ </span><span class="c"></span>';
+    t.appendChild(line); trim();
+    const c = line.querySelector('.c');
+    for (const ch of s.command) { c.textContent += ch; await sleep(22); }
+    await sleep(350);
+    const pace = Math.max(600, Math.min(2600, s.seconds * 1000)) / Math.max(1, s.lines.length);
+    for (const l of s.lines) {
+      const d = document.createElement('div');
+      d.innerHTML = colour(l) || '&nbsp;';
+      t.appendChild(d); trim();
+      await sleep(pace);
+    }
+    const x = document.createElement('div');
+    x.className = 'x'; x.textContent = 'exit ' + s.exit_code;
+    t.appendChild(x); trim();
+    await sleep(1400);
+  }
+  await sleep(1200);
+  document.title = 'done';
+}
+run();
+</script>
+</body>
+</html>

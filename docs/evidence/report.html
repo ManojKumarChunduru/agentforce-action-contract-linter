@@ -1,0 +1,61 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'>
+<title>Agentforce action contract report</title>
+<style>
+body { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; margin: 2rem;
+       color: #1f2328; background: #ffffff; max-width: 960px; }
+h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+h2 { font-size: 1.1rem; margin-top: 2rem; border-bottom: 1px solid #d0d7de;
+     padding-bottom: 0.25rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; padding: 0.35rem 0.6rem; border-bottom: 1px solid #eaeef2; }
+th { background: #f6f8fa; }
+.badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-weight: 700;
+         color: #ffffff; background: #6e7781; }
+.badge-drift { background: #cf222e; }
+.badge-clean { background: #1a7f37; }
+.badge-gaps { background: #9a6700; }
+.sev-fatal { color: #cf222e; font-weight: 600; }
+.sev-warn { color: #9a6700; font-weight: 600; }
+.sev-info { color: #6e7781; }
+.muted { color: #6e7781; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; }
+</style></head><body>
+<h1>Agentforce action contract report</h1>
+<p><span class='badge badge-drift'>DRIFT</span> <span class='muted'>17 actions, 4 topics, 13 findings across 12 actions, 2 undecidable properties</span></p>
+<h2 id='summary'>Summary by drift class</h2>
+<table><thead><tr><th>class</th><th>severity</th><th>evidence</th><th>count</th></tr></thead><tbody>
+<tr><td><code>dangling_topic_function</code></td><td class='sev-fatal'>fatal</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>missing_target</code></td><td class='sev-fatal'>fatal</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>no_planner_output</code></td><td class='sev-fatal'>fatal</td><td>documented</td><td>1</td></tr>
+<tr><td><code>target_inactive</code></td><td class='sev-fatal'>fatal</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>missing_required_input</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>orphan_input</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>orphan_output</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>required_not_enforced</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>text_cap_exceeded</code></td><td class='sev-warn'>warn</td><td>documented</td><td>1</td></tr>
+<tr><td><code>type_mismatch</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>2</td></tr>
+<tr><td><code>uncovered_input</code></td><td class='sev-warn'>warn</td><td>inferred</td><td>1</td></tr>
+<tr><td><code>unreachable_action</code></td><td class='sev-info'>info</td><td>inferred</td><td>1</td></tr>
+</tbody></table>
+<h2 id='findings'>Findings</h2>
+<table><thead><tr><th>severity</th><th>class</th><th>action</th><th>message</th></tr></thead><tbody>
+<tr><td class='sev-fatal'>fatal</td><td><code>dangling_topic_function</code></td><td>Apply_Discount</td><td>topic Order_Support lists &#x27;Apply_Discount&#x27;, which is not an action</td></tr>
+<tr><td class='sev-fatal'>fatal</td><td><code>missing_target</code></td><td>Track_Shipment</td><td>apex target &#x27;ShipmentTrackerV2&#x27; <span class='muted'>(not in project)</span></td></tr>
+<tr><td class='sev-fatal'>fatal</td><td><code>no_planner_output</code></td><td>Find_Similar_Cases</td><td>no output property of Find_Similar_Cases is marked copilotAction:isUsedByPlanner</td></tr>
+<tr><td class='sev-fatal'>fatal</td><td><code>target_inactive</code></td><td>Lookup_Product_Specs</td><td>Flow Lookup_Product_Specs is not Active</td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>missing_required_input</code></td><td>Log_Interaction</td><td>input &#x27;channel&#x27; is required by InteractionLogger and absent from the schema <span class='muted'>(absent)</span></td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>orphan_input</code></td><td>Get_Order_History</td><td>input &#x27;includeCancelled&#x27; has no variable on OrderHistoryService</td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>orphan_output</code></td><td>Get_Account_Health</td><td>output &#x27;riskLevel&#x27; is never produced by AccountHealthScorer</td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>required_not_enforced</code></td><td>Update_Contact_Preferences</td><td>input &#x27;channel&#x27; is required by ContactPreferenceUpdater but optional in the schema <span class='muted'>(optional_in_schema)</span></td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>text_cap_exceeded</code></td><td>Draft_Customer_Reply</td><td>input &#x27;extraContext&#x27; declares maxLength 2000, cap is 250 <span class='muted'>(2000)</span></td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>type_mismatch</code></td><td>Escalate_Case</td><td>input &#x27;priorityLevel&#x27;: schema lightning__integerType, target Number <span class='muted'>(narrowed: target accepts decimals, schema only offers integers)</span></td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>type_mismatch</code></td><td>Summarize_Case</td><td>input &#x27;caseId&#x27;: schema lightning__textType, target Id <span class='muted'>(weakened: target expects a record ID, schema declares free text)</span></td></tr>
+<tr><td class='sev-warn'>warn</td><td><code>uncovered_input</code></td><td>Cancel_Order</td><td>Cancel_Order accepts &#x27;cancellationReason&#x27; but the schema never declares it</td></tr>
+<tr><td class='sev-info'>info</td><td><code>unreachable_action</code></td><td>Reopen_Case</td><td>no topic lists Reopen_Case</td></tr>
+</tbody></table>
+<h2 id='undecidable'>Undecidable: checked by nobody</h2>
+<table><thead><tr><th>action</th><th>variable</th><th>side</th><th>declared type</th><th>reason</th></tr></thead><tbody>
+<tr><td>Merge_Duplicate_Contacts</td><td><code>primary</code></td><td>input</td><td><code>Contact</code></td><td>Contact is an SObject; no lightning:type carries records</td></tr>
+<tr><td>Schedule_Callback</td><td><code>caseRecord</code></td><td>input</td><td><code>SObject&lt;Case&gt;</code></td><td>SObject variable; no lightning:type carries records</td></tr>
+</tbody></table>
+</body></html>
