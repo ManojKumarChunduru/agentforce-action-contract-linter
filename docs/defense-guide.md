@@ -69,7 +69,7 @@ refuses rather than guesses, and it counts the refusals so a reviewer can see th
 ### Claim 5: every number is machine checked
 
 - Command: `make verify`
-- Numbers: 236 tests, 99.5% line coverage with a 95% floor in CI, every figure in the README and
+- Numbers: 250 tests, 99.5% line coverage with a 95% floor in CI, every figure in the README and
   in this guide re-measured by `tools/collect_metrics.py` and held to the prose by
   `tools/check_numbers.py`.
 - If pushed: "The checker matches anchor phrases, not digits, because a digit search passes while
@@ -132,7 +132,7 @@ Do not say:
 - "The deploy accepts this." Say: the metadata cannot see it; whether the deploy rejects any of
   it is not observed here.
 - "It parses Apex." Say: it reads the invocable subset and refuses the rest.
-- "It is fully tested." Say: 236 tests, 99.5% line coverage, and the untested lines are the
+- "It is fully tested." Say: 250 tests, 99.5% line coverage, and the untested lines are the
   `__main__` guard and one branch of the argparse exit handling.
 - "It works on any org." Say: it reads any SFDX project; actions stored inside a planner bundle
   are not read yet.

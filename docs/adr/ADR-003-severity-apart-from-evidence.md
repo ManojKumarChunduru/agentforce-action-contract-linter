@@ -29,6 +29,11 @@ return random responses, and `text_cap_exceeded`, a cap of 250 characters on tex
 10 are inferred. Of the 4 fatal classes, 3 of 4 fatal classes are inferred; only 1 of the fatal
 classes is documented.
 
+The defaults are the author's reading, not a constant: `afcl policy` prints them as JSON with
+the reason for each line, and `afcl lint --policy` overrides them per class. A team that treats
+a weakened type as fatal, or cannot yet fix every inactive Flow, changes the file rather than
+the code, and an unknown class or level in the file is refused before anything is examined.
+
 ## Alternative considered
 
 Fail only on documented consequences. That would make `missing_target` a warning, which no

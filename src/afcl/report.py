@@ -49,6 +49,10 @@ def to_dict(report: LintReport, strict: bool = False) -> dict:
         "verdict": verdict(report, strict),
         "strict": strict,
         "name_only": report.name_only,
+        "policy": {
+            "severity_overrides": dict(report.policy.severity),
+            "fail_on_undecidable": report.policy.fail_on_undecidable,
+        },
         "totals": {
             "actions": report.actions_total,
             "topics": report.topics_total,
@@ -61,7 +65,7 @@ def to_dict(report: LintReport, strict: bool = False) -> dict:
         "by_class": dict(sorted(report.by_class().items())),
         "by_severity": dict(sorted(report.by_severity().items())),
         "by_target_type": dict(sorted(report.by_target_type().items())),
-        "findings": [{**asdict(f), "severity": f.severity} for f in _sorted_findings(report)],
+        "findings": [asdict(f) for f in _sorted_findings(report)],
         "undecidable": [asdict(u) for u in report.undecidables],
     }
 

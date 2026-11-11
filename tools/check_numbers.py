@@ -73,6 +73,33 @@ def anchor_regex(anchor: str, metrics: dict) -> re.Pattern:
     return re.compile("".join(out))
 
 
+def check_class_table(readme: Path) -> list[str]:
+    """Every row of the drift class table (class, severity, evidence, count) must match exp04."""
+    exp = json.loads((REPO / "docs" / "experiments" / "exp04_severity_evidence.json").read_text())
+    rows = {r["drift_class"]: r for r in exp["rows"]}
+    seen = set()
+    failures = []
+    pattern = re.compile(r"^\| `([a-z_]+)` \| (\w+) \| (\w+) \| (\d+) \|$")
+    for line in readme.read_text(encoding="utf-8").splitlines():
+        m = pattern.match(line.strip())
+        if not m:
+            continue
+        name, sev, ev, count = m.group(1), m.group(2), m.group(3), int(m.group(4))
+        seen.add(name)
+        row = rows.get(name)
+        if row is None:
+            failures.append(f"README table names drift class {name!r}, which exp04 does not know")
+        elif (row["severity"], row["evidence"], row["fixture_count"]) != (sev, ev, count):
+            failures.append(
+                f"README table row for {name} says {sev}/{ev}/{count}; exp04 says "
+                f"{row['severity']}/{row['evidence']}/{row['fixture_count']}"
+            )
+    missing = set(rows) - seen
+    if seen and missing:
+        failures.append(f"README table is missing drift classes: {sorted(missing)}")
+    return failures
+
+
 def main() -> int:
     payload = json.loads(METRICS.read_text())
     metrics: dict = payload["metrics"]
@@ -113,6 +140,10 @@ def main() -> int:
             start = max(0, m.start() - 30)
             context = scrubbed[start : m.end() + 30].strip()
             failures.append(f"{doc}: unguarded number {m.group(1)} in '...{context}...'")
+
+    # 4. the drift class table: small counts are too common to anchor, so the README's table is
+    #    checked row by row against the severity evidence experiment that produced it
+    failures += check_class_table(REPO / "README.md")
 
     for g in gaps:
         print(f"gap: {g}")

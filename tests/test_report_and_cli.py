@@ -259,3 +259,47 @@ def test_python_dash_m_afcl_is_the_same_entry_point():
     )
     assert proc.returncode == exit_codes.DRIFT_FOUND
     assert json.loads(proc.stdout)["verdict"] == "DRIFT"
+
+
+def test_a_policy_file_changes_the_exit_code(builder, tmp_path):
+    builder.apex("A", [("Id", "a")], [("Boolean", "ok")])
+    builder.action(
+        "Act",
+        "A",
+        input=input_schema({"a": prop(T)}),
+        output=output_schema({"ok": prop(BOOL, planner=True)}),
+    )
+    builder.topic("T", functions=["Act"])
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps({"severity": {"type_mismatch": "fatal"}}))
+    assert run(["lint", str(builder.root)])[0] == exit_codes.CLEAN
+    assert run(["lint", str(builder.root), "--policy", str(policy)])[0] == exit_codes.DRIFT_FOUND
+
+
+def test_an_invalid_policy_file_exits_3_before_anything_is_examined(builder, tmp_path):
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps({"severity": {"nope": "fatal"}}))
+    code, out, err = run(["lint", str(clean_builder(builder).root), "--policy", str(policy)])
+    assert code == exit_codes.USAGE and out == "" and "unknown drift class" in err
+
+
+def test_a_missing_or_malformed_policy_file_exits_3(builder, tmp_path):
+    code, _, err = run(
+        ["lint", str(clean_builder(builder).root), "--policy", str(tmp_path / "none.json")]
+    )
+    assert code == exit_codes.USAGE and "does not exist" in err
+    bad = tmp_path / "bad.json"
+    bad.write_text("{")
+    code, _, err = run(["lint", str(builder.root), "--policy", str(bad)])
+    assert code == exit_codes.USAGE and "not valid JSON" in err
+
+
+def test_the_policy_subcommand_prints_valid_json_with_every_class(capsys):
+    assert main(["policy"]) == 0
+    doc = json.loads(capsys.readouterr().out)
+    assert set(doc["severity"]) == set(DRIFT_CLASSES)
+
+
+def test_the_json_report_records_the_policy_in_force(builder):
+    _, out, _ = run(["lint", str(clean_builder(builder).root), "--format", "json"])
+    assert json.loads(out)["policy"] == {"severity_overrides": {}, "fail_on_undecidable": False}

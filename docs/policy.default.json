@@ -1,0 +1,37 @@
+{
+  "severity": {
+    "missing_target": "fatal",
+    "target_inactive": "fatal",
+    "no_planner_output": "fatal",
+    "dangling_topic_function": "fatal",
+    "orphan_input": "warn",
+    "uncovered_input": "warn",
+    "missing_required_input": "warn",
+    "required_not_enforced": "warn",
+    "type_mismatch": "warn",
+    "orphan_output": "warn",
+    "text_cap_exceeded": "warn",
+    "unreachable_action": "info"
+  },
+  "fail_on_undecidable": false,
+  "why": {
+    "missing_target": "invocationTarget names an Apex class or Flow that is not in the project, or an Apex class with no @InvocableMethod. Consequence: there is nothing for the planner to invoke (inferred).",
+    "target_inactive": "the Flow behind the action is not Active. Consequence: an inactive Flow cannot be launched by an action (inferred).",
+    "no_planner_output": "no output property is marked copilotAction:isUsedByPlanner. Consequence: the GenAiFunction reference states the planner returns random responses (documented).",
+    "dangling_topic_function": "a topic lists a functionName that is not an action in the project. Consequence: the topic promises an action the planner cannot find (inferred).",
+    "orphan_input": "the input schema declares a property the target has no variable for. Consequence: the planner collects a value that is silently dropped (inferred).",
+    "uncovered_input": "the target accepts an input the schema never declares. Consequence: the planner can never supply it, so the target always sees null (inferred).",
+    "missing_required_input": "an @InvocableVariable(required=true) has no property in the schema at all. Consequence: the planner can never supply a value Apex insists on (inferred).",
+    "required_not_enforced": "an @InvocableVariable(required=true) is in the schema but not in its required list. Consequence: the planner may call the action without a value Apex insists on (inferred).",
+    "type_mismatch": "a schema property and the target variable of the same name disagree on type. Consequence: validation is weakened, widened or lost at the boundary (inferred).",
+    "orphan_output": "the output schema declares a property the target never produces. Consequence: the planner reasons over a field that is always empty (inferred).",
+    "text_cap_exceeded": "a text property declares maxLength above the documented cap of 250. Consequence: the reference caps text types at 250 characters (documented).",
+    "unreachable_action": "no topic lists the action. Consequence: the planner never sees it; the action is dead metadata (inferred)."
+  },
+  "levels": [
+    "fatal",
+    "warn",
+    "info"
+  ],
+  "note": "severity decides the exit code: fatal fails by default, warn fails under --strict, info never fails; fail_on_undecidable makes an unchecked property fail the build"
+}

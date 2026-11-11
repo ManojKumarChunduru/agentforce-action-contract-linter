@@ -396,3 +396,94 @@ def test_reconcile_is_pure_and_repeatable(fixture_project):
     a = reconcile(fixture_project)
     b = reconcile(fixture_project)
     assert a.findings == b.findings and a.undecidables == b.undecidables
+
+
+# ---------------------------------------------------------------- policy
+
+
+def test_the_default_policy_matches_the_drift_class_table():
+    from afcl.contracts import Policy
+
+    policy = Policy()
+    for name, dc in DRIFT_CLASSES.items():
+        assert policy.severity_of(name) == dc.severity
+
+
+def test_a_policy_override_relabels_a_finding_without_adding_or_removing_any(builder):
+    from afcl.contracts import Policy
+
+    builder.apex("A", [("Id", "a")], [("Boolean", "ok")])
+    builder.action("Act", "A", input=input_schema({"a": prop(T)}), output=clean_output())
+    reachable(builder, "Act")
+    plain = builder.report()
+    strict_types = builder.report(policy=Policy(severity={"type_mismatch": FATAL}))
+    assert classes(plain) == classes(strict_types) == ["type_mismatch"]
+    assert plain.findings[0].severity == WARN and strict_types.findings[0].severity == FATAL
+    assert not plain.should_fail() and strict_types.should_fail()
+
+
+def test_a_policy_can_demote_a_fatal_class_to_info(builder):
+    from afcl.contracts import Policy
+
+    builder.flow("F", [], [("Boolean", "ok")], status="Draft")
+    builder.action("Act", "F", "flow", output=clean_output())
+    reachable(builder, "Act")
+    report = builder.report(policy=Policy(severity={"target_inactive": INFO}))
+    assert not report.should_fail(strict=True)
+
+
+def test_fail_on_undecidable_in_the_policy_fails_without_strict(builder):
+    from afcl.contracts import Policy
+
+    builder.action("Act", "P", target_type="prompt")
+    reachable(builder, "Act")
+    assert builder.report(policy=Policy(fail_on_undecidable=True)).should_fail()
+
+
+def test_load_policy_refuses_an_unknown_drift_class():
+    import pytest
+
+    from afcl.contracts import PolicyError, load_policy
+
+    with pytest.raises(PolicyError, match="unknown drift class"):
+        load_policy({"severity": {"typo_class": "fatal"}})
+
+
+def test_load_policy_refuses_an_unknown_level():
+    import pytest
+
+    from afcl.contracts import PolicyError, load_policy
+
+    with pytest.raises(PolicyError, match="fatal, warn or info"):
+        load_policy({"severity": {"type_mismatch": "critical"}})
+
+
+def test_load_policy_refuses_a_non_object_document_and_a_non_boolean_flag():
+    import pytest
+
+    from afcl.contracts import PolicyError, load_policy
+
+    with pytest.raises(PolicyError, match="JSON object"):
+        load_policy(["fatal"])
+    with pytest.raises(PolicyError, match="severity"):
+        load_policy({"severity": "fatal"})
+    with pytest.raises(PolicyError, match="true or false"):
+        load_policy({"fail_on_undecidable": "yes"})
+
+
+def test_the_default_policy_document_round_trips_through_load_policy():
+    from afcl.contracts import default_policy_document, load_policy
+
+    doc = default_policy_document()
+    policy = load_policy(doc)
+    assert policy.severity == doc["severity"] and set(doc["why"]) == set(DRIFT_CLASSES)
+
+
+def test_the_committed_default_policy_equals_what_the_cli_prints():
+    import json
+
+    from afcl.contracts import default_policy_document
+    from tests.conftest import REPO_ROOT
+
+    committed = json.loads((REPO_ROOT / "docs" / "policy.default.json").read_text())
+    assert committed == default_policy_document()

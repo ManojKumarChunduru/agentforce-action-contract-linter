@@ -10,11 +10,19 @@ where it is tested without a subprocess.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 from afcl import exit_codes
-from afcl.contracts import DRIFT_CLASSES, reconcile
+from afcl.contracts import (
+    DRIFT_CLASSES,
+    Policy,
+    PolicyError,
+    default_policy_document,
+    load_policy,
+    reconcile,
+)
 from afcl.project import ProjectError, load_project
 from afcl.report import RENDERERS, verdict
 
@@ -52,6 +60,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="write the report to this file instead of stdout",
     )
     lint.add_argument(
+        "--policy",
+        type=Path,
+        default=None,
+        help="JSON file overriding drift class severities (see `afcl policy`)",
+    )
+    lint.add_argument(
         "--allow-load-errors",
         action="store_true",
         help="report on what loaded even if some files were unreadable (exit code still 2)",
@@ -59,6 +73,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     classes = sub.add_parser("classes", help="list the drift classes, their severity and evidence")
     classes.add_argument("--format", choices=["text", "markdown"], default="text")
+
+    sub.add_parser("policy", help="print the default severity policy as JSON, with reasons")
     return parser
 
 
@@ -81,7 +97,24 @@ def _render_classes(fmt: str) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _read_policy(path: Path | None) -> Policy:
+    if path is None:
+        return Policy()
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise PolicyError(f"policy file {path} does not exist") from exc
+    except json.JSONDecodeError as exc:
+        raise PolicyError(f"policy file {path} is not valid JSON ({exc.msg})") from exc
+    return load_policy(raw)
+
+
 def run_lint(args: argparse.Namespace, out=sys.stdout, err=sys.stderr) -> int:
+    try:
+        policy = _read_policy(args.policy)
+    except PolicyError as exc:
+        print(f"afcl: {exc}", file=err)
+        return exit_codes.USAGE
     try:
         project = load_project(args.project)
     except ProjectError as exc:
@@ -96,7 +129,7 @@ def run_lint(args: argparse.Namespace, out=sys.stdout, err=sys.stderr) -> int:
         for le in project.load_errors:
             print(f"  {le.path}: {le.message}", file=err)
         return exit_codes.COULD_NOT_ANSWER
-    report = reconcile(project)
+    report = reconcile(project, policy=policy)
     rendered = RENDERERS[args.format](report, strict=args.strict)
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -122,6 +155,9 @@ def main(argv: list[str] | None = None) -> int:
         return exit_codes.USAGE if exc.code not in (0, None) else 0
     if args.command == "classes":
         sys.stdout.write(_render_classes(args.format))
+        return exit_codes.CLEAN
+    if args.command == "policy":
+        sys.stdout.write(json.dumps(default_policy_document(), indent=2) + "\n")
         return exit_codes.CLEAN
     return run_lint(args)
 

@@ -22,7 +22,7 @@ Three design choices live here and are worth reading before the code:
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from afcl.project import ActionDefinition, Project
 from afcl.schema import TEXT_CAP
@@ -162,10 +162,70 @@ class Finding:
     property_name: str = ""
     detail: str = ""
     path: str = ""
+    severity: str = ""
+    """Filled from the drift class unless a Policy overrides it; never left empty."""
 
-    @property
-    def severity(self) -> str:
-        return DRIFT_CLASSES[self.drift_class].severity
+    def __post_init__(self) -> None:
+        if not self.severity:
+            object.__setattr__(self, "severity", DRIFT_CLASSES[self.drift_class].severity)
+
+
+class PolicyError(ValueError):
+    """The policy file could not be used; nothing was examined."""
+
+
+@dataclass(frozen=True)
+class Policy:
+    """Per-class severity overrides, so a team can decide what fails its own build.
+
+    The defaults in DRIFT_CLASSES are the author's reading of each consequence (ADR-003). A team
+    that treats a type disagreement as fatal, or that cannot yet fix every inactive Flow, writes
+    a small JSON file and passes `--policy`. Unknown classes and unknown levels are refused at
+    the boundary with exit code 3, so a typo cannot silently relax the gate.
+    """
+
+    severity: dict[str, str] = field(default_factory=dict)
+    fail_on_undecidable: bool = False
+
+    def severity_of(self, drift_class: str) -> str:
+        return self.severity.get(drift_class, DRIFT_CLASSES[drift_class].severity)
+
+
+def default_policy_document() -> dict:
+    """The default policy as a JSON-serialisable document, with the reason for each line."""
+    return {
+        "severity": {name: dc.severity for name, dc in DRIFT_CLASSES.items()},
+        "fail_on_undecidable": False,
+        "why": {
+            name: f"{dc.summary}. Consequence: {dc.consequence} ({dc.evidence})."
+            for name, dc in DRIFT_CLASSES.items()
+        },
+        "levels": [FATAL, WARN, INFO],
+        "note": (
+            "severity decides the exit code: fatal fails by default, warn fails under --strict, "
+            "info never fails; fail_on_undecidable makes an unchecked property fail the build"
+        ),
+    }
+
+
+def load_policy(raw: dict) -> Policy:
+    """Validate a policy document. Raises PolicyError naming the first problem."""
+    if not isinstance(raw, dict):
+        raise PolicyError("policy must be a JSON object")
+    severity = raw.get("severity", {})
+    if not isinstance(severity, dict):
+        raise PolicyError("policy 'severity' must be an object of drift class to level")
+    for name, level in severity.items():
+        if name not in DRIFT_CLASSES:
+            raise PolicyError(f"policy names unknown drift class {name!r}")
+        if level not in (FATAL, WARN, INFO):
+            raise PolicyError(
+                f"policy level for {name!r} must be fatal, warn or info, got {level!r}"
+            )
+    fail_on_undecidable = raw.get("fail_on_undecidable", False)
+    if not isinstance(fail_on_undecidable, bool):
+        raise PolicyError("policy 'fail_on_undecidable' must be true or false")
+    return Policy(severity=dict(severity), fail_on_undecidable=fail_on_undecidable)
 
 
 @dataclass(frozen=True)
@@ -187,6 +247,7 @@ class LintReport:
     findings: list[Finding] = field(default_factory=list)
     undecidables: list[Undecidable] = field(default_factory=list)
     name_only: bool = False
+    policy: Policy = field(default_factory=Policy)
 
     def by_class(self) -> Counter[str]:
         return Counter(f.drift_class for f in self.findings)
@@ -211,7 +272,7 @@ class LintReport:
     def should_fail(self, strict: bool = False) -> bool:
         if self.failing(strict):
             return True
-        return strict and bool(self.undecidables)
+        return (strict or self.policy.fail_on_undecidable) and bool(self.undecidables)
 
 
 def _reconcile_inputs(
@@ -406,16 +467,21 @@ def _reconcile_outputs(
         )
 
 
-def reconcile(project: Project, name_only: bool = False) -> LintReport:
+def reconcile(
+    project: Project, name_only: bool = False, policy: Policy | None = None
+) -> LintReport:
     """Reconcile every action and topic in the project.
 
-    Pure: reads the project, returns a report, touches nothing on disk.
+    Pure: reads the project, returns a report, touches nothing on disk. A policy only relabels
+    severities; it never adds or removes a finding.
     """
+    policy = policy or Policy()
     report = LintReport(
         actions_total=len(project.actions),
         topics_total=len(project.topics),
         planners_total=len(project.planners),
         name_only=name_only,
+        policy=policy,
     )
     findings = report.findings
     undecidables = report.undecidables
@@ -494,4 +560,6 @@ def reconcile(project: Project, name_only: bool = False) -> LintReport:
                         path=str(topic.path),
                     )
                 )
+    if policy.severity:
+        report.findings = [replace(f, severity=policy.severity_of(f.drift_class)) for f in findings]
     return report

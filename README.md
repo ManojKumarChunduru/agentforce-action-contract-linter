@@ -48,7 +48,7 @@ instance of every drift class planted on purpose:
   have the right property names on both sides: 2 type mismatches, a required variable
   that is present but unenforced, a text cap, a missing planner flag and an inactive Flow.
 
-The credibility line: 236 tests at 99.5% line coverage, 13 findings across 12 of 17 actions
+The credibility line: 250 tests at 99.5% line coverage, 13 findings across 12 of 17 actions
 (11 with contract drift, the rest reachability) matching 13 of 13 planted drifts with a resolution floor of 1/13 on this fixture, and every
 figure in this document re-measured by CI and held to the prose by `tools/check_numbers.py`.
 
@@ -102,6 +102,12 @@ means it runs but its contract is misdescribed, `info` means it is dead metadata
 **Evidence** is about the linter's claim: `documented` means the GenAiFunction metadata reference
 states the consequence, `inferred` means it follows from the contract. Keeping the two apart is
 the subject of ADR-003.
+
+**The policy is a file, not a constant.** `afcl policy` prints the default severities as JSON
+with the reason for each line (committed as `docs/policy.default.json`), and
+`afcl lint --policy my-policy.json` overrides any of them per class. A policy only relabels; it
+never adds or removes a finding. An unknown class or level in the file is refused with exit code
+3 before anything is examined, so a typo cannot silently relax the gate.
 
 **Undecidable** is neither. It is a schema property paired with a target variable whose type the
 extractor will not map (SObject, `Map`, `Object`, `Blob`, a custom Apex type, an Apex-defined
@@ -237,12 +243,12 @@ src/afcl/
   targets.py     one Variable shape for both languages; compatible()
   contracts.py   the drift classes and the reconciliation (ADR-001, ADR-003)
   report.py      text, json, markdown, html renderers
-  cli.py         argparse, exit codes (ADR-004)
+  cli.py         argparse, --policy, exit codes (ADR-004)
 fixture/         the committed org and its ground truth
 experiments/     exp01 census, exp02 name-only, exp03 undecidable, exp04 severity evidence
 tools/           collect_metrics, check_numbers, render_architecture, capture_screenshots, record_demo
-docs/            adr/, experiments/*.json, metrics.json, defense-guide.md, assets/, evidence/
-tests/           236 tests, each named as the property it pins
+docs/            adr/, experiments/*.json, metrics.json, policy.default.json, defense-guide.md, assets/, evidence/
+tests/           250 tests, each named as the property it pins
 ```
 
 Exit codes, because a pipeline branches on them:
@@ -252,7 +258,7 @@ Exit codes, because a pipeline branches on them:
 | 0 | clean: every action reconciled, nothing fatal (nothing undecidable either, under `--strict`) |
 | 1 | drift found: the tool did its job and the answer was no |
 | 2 | could not answer: no `sfdx-project.json`, or a file the linter could not read (`--allow-load-errors` still reports what loaded, and still exits 2) |
-| 3 | usage error: nothing was examined |
+| 3 | usage error, including an invalid `--policy` file: nothing was examined |
 
 The distinction between 1 and 2 is the one that matters. A linter that returns 1 for both
 teaches a pipeline to add `|| true` the first time a parse fails, and from then on nothing is
@@ -263,8 +269,9 @@ which runs all four. `make receipts` runs `tools/collect_metrics.py` (re-measure
 from the test reports and the experiment JSON into `docs/metrics.json`) and
 `tools/check_numbers.py`, which holds this README, the defense guide and the ADRs to those
 figures. It matches anchor phrases rather than digits ("13 findings", "across 12 of 17 actions")
-because a digit search passes while the sentence around it has gone stale, and it reports any
-number of 6 or more in prose that no metric produces. Coverage has a 95% floor in CI.
+because a digit search passes while the sentence around it has gone stale, it reports any
+number of 6 or more in prose that no metric produces, and it checks the drift class table above
+row by row against the experiment that produced it. Coverage has a 95% floor in CI.
 
 ## Tech stack
 
@@ -273,7 +280,7 @@ number of 6 or more in prose that no metric produces. Coverage has a 95% floor i
 | Python, standard library only | the linter | the deployment target is a CI step next to `sf project deploy` with no pip step; zero imports outside the standard library is zero reasons not to run it (ADR-004) |
 | `xml.etree`, `json`, `re` | reading metadata | Salesforce metadata is XML and the schemas are JSON; the Apex subset is small enough for two expressions and a brace matcher (ADR-002) |
 | `argparse` | the CLI | the boring choice, recorded so it is not reopened |
-| pytest, coverage, ruff | verification | 236 tests, 99.5% line coverage, a line length of one hundred columns the code holds to |
+| pytest, coverage, ruff | verification | 250 tests, 99.5% line coverage, a line length of one hundred columns the code holds to |
 | GitHub Actions | CI | the tool's own use case is a PR gate, so the repository runs as one: three Pythons, lint, tests as their own step, coverage floor, experiments re-measured, receipts checked, fixture report and severity table in the job summary |
 | Playwright, ffmpeg, mermaid-cli | evidence only | screenshots framed by heading, a replay GIF from captured stdout, a committed architecture SVG; none of it is imported by `afcl` |
 | a committed SFDX fixture | the corpus | an org cannot be committed; a fixture with planted ground truth can, and it is what makes every number reproducible offline (ADR-005) |
