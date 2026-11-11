@@ -1,0 +1,39 @@
+flowchart TB
+  subgraph proj["SFDX project, read only"]
+    bundle["genAiPlannerBundles<br/>the agent"]
+    topics["genAiPlugins<br/>topics list functionName"]
+    actions["genAiFunctions<br/>meta.xml + input/output schema.json"]
+    apex["classes/*.cls<br/>@InvocableMethod"]
+    flows["flows/*.flow-meta.xml<br/>isInput / isOutput variables"]
+  end
+
+  project["project.py<br/>discovery; load errors kept, never raised"]
+
+  subgraph extract["one extractor per artefact, each refuses what it cannot read"]
+    topicsx["topics.py<br/>reachability graph"]
+    schema["schema.py<br/>lightning:type vocabulary, text cap"]
+    apexx["apex.py<br/>invocable subset only"]
+    floww["flow.py<br/>variables, Active status"]
+  end
+
+  targets["targets.py<br/>one Variable shape; compatible() names the direction of a mismatch"]
+  contracts["contracts.py<br/>12 drift classes, severity apart from evidence, undecidable counted apart from drift"]
+  report["report.py<br/>text, json, markdown, html"]
+  cli["cli.py<br/>exit 0 clean / 1 drift / 2 could not answer / 3 usage"]
+
+  bundle --> project
+  topics --> project
+  actions --> project
+  apex --> project
+  flows --> project
+  project --> topicsx
+  project --> schema
+  project --> apexx
+  project --> floww
+  apexx --> targets
+  floww --> targets
+  schema --> contracts
+  targets --> contracts
+  topicsx --> contracts
+  contracts --> report
+  report --> cli

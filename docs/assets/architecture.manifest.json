@@ -1,0 +1,9 @@
+{
+  "source": "docs/assets/architecture.mmd",
+  "source_sha256": "6be5bd924d135fecdf853c4369a8889b14dad1c4ba812dbfc5c0514b6d9709ea",
+  "target": "docs/assets/architecture.svg",
+  "width": 1300,
+  "height": 968,
+  "htmlLabels": false,
+  "background": "#f8fafc"
+}

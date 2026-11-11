@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="agentforce-action-contract-linter: draws the edge the metadata does not have">
+  <title>agentforce-action-contract-linter</title>
+  <desc>An action's schema.json on the left, the invocable Apex or Flow on the right, and the edge between them drawn in by the linter.</desc>
+  <style>
+    .bg { fill: #0f172a; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .sans { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .title { fill: #f8fafc; font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
+    .claim { fill: #94a3b8; font-size: 20px; }
+    .box { fill: #1e293b; stroke: #334155; stroke-width: 2; }
+    .label { fill: #e2e8f0; font-size: 17px; }
+    .sub { fill: #64748b; font-size: 13px; }
+    .edge { fill: none; stroke: #38bdf8; stroke-width: 3; stroke-linecap: round;
+            stroke-dasharray: 420; stroke-dashoffset: 420;
+            animation: draw 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards; }
+    .edge-ghost { fill: none; stroke: #334155; stroke-width: 3; stroke-dasharray: 6 10; }
+    .edge-label { fill: #38bdf8; font-size: 14px; opacity: 0;
+                  animation: appear 0.8s ease-out 2.6s forwards; }
+    .chip { fill: #7f1d1d; stroke: #ef4444; stroke-width: 1.5; opacity: 0;
+            animation: appear 0.6s ease-out 3.2s forwards; }
+    .chip-text { fill: #fecaca; font-size: 15px; font-weight: 700; opacity: 0;
+                 animation: appear 0.6s ease-out 3.2s forwards; }
+    .glow { fill: #38bdf8; opacity: 0.06; animation: pulse 6s ease-in-out infinite; }
+    .cursor { fill: #38bdf8; animation: blink 1.1s steps(1) infinite; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes appear { to { opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 0.04; } 50% { opacity: 0.10; } }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .edge { animation: none; stroke-dashoffset: 0; }
+      .edge-label, .chip, .chip-text { animation: none; opacity: 1; }
+      .glow { animation: none; opacity: 0.06; }
+      .cursor { animation: none; opacity: 1; }
+    }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1280" height="320"/>
+  <circle class="glow" cx="640" cy="200" r="260"/>
+
+  <text class="mono title" x="64" y="84">agentforce-action-contract-linter<tspan class="cursor">_</tspan></text>
+  <text class="sans claim" x="64" y="118">A deploy cannot see that an action's schema no longer matches the Apex or Flow behind it.</text>
+  <text class="sans claim" x="64" y="146">This draws the edge the metadata does not have, and says which of its own checks it could not make.</text>
+
+  <!-- left: the schema -->
+  <rect class="box" x="140" y="190" width="300" height="96" rx="10"/>
+  <text class="mono label" x="164" y="228">input/schema.json</text>
+  <text class="mono sub" x="164" y="254">"caseId": lightning__textType</text>
+
+  <!-- right: the target -->
+  <rect class="box" x="840" y="190" width="300" height="96" rx="10"/>
+  <text class="mono label" x="864" y="228">@InvocableVariable</text>
+  <text class="mono sub" x="864" y="254">public Id caseId;</text>
+
+  <!-- the edge nobody draws, then the edge this draws -->
+  <path class="edge-ghost" d="M 440 238 C 560 238, 720 238, 840 238"/>
+  <path class="edge" d="M 440 238 C 560 238, 720 238, 840 238"/>
+  <text class="mono edge-label" x="640" y="220" text-anchor="middle">reconciled by name and type</text>
+
+  <!-- the verdict -->
+  <rect class="chip" x="520" y="250" width="240" height="30" rx="15"/>
+  <text class="mono chip-text" x="640" y="271" text-anchor="middle">type_mismatch: weakened</text>
+</svg>
