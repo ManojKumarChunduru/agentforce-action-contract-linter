@@ -1,0 +1,13 @@
+# Keep the GitHub language bar honest: the fixture is real Salesforce source,
+# not vendored data, and the linter exists to read exactly these file types.
+*.cls linguist-language=Apex linguist-detectable=true
+*.trigger linguist-language=Apex linguist-detectable=true
+*.flow-meta.xml linguist-language=XML linguist-detectable=true
+*.genAiFunction-meta.xml linguist-language=XML linguist-detectable=true
+*.genAiPlugin-meta.xml linguist-language=XML linguist-detectable=true
+*.genAiPlannerBundle-meta.xml linguist-language=XML linguist-detectable=true
+fixture/**/schema.json linguist-language=JSON linguist-detectable=true
+docs/experiments/*.json linguist-generated=true
+docs/metrics.json linguist-generated=true
+docs/assets/architecture.svg linguist-generated=true
+docs/evidence/* linguist-generated=true
