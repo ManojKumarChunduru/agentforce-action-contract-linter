@@ -1,0 +1,113 @@
+{
+  "classes_documented": 2,
+  "classes_inferred": 10,
+  "classes_total": 12,
+  "fails_by_default": [
+    "missing_target",
+    "target_inactive",
+    "no_planner_output",
+    "dangling_topic_function"
+  ],
+  "fatal_classes": 4,
+  "fatal_documented": 1,
+  "fatal_inferred": 3,
+  "note": "documented means the GenAiFunction metadata reference states the consequence; inferred means it follows from the contract and has not been observed against an org in this repository (ADR-005)",
+  "rows": [
+    {
+      "consequence": "there is nothing for the planner to invoke",
+      "drift_class": "missing_target",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "fatal"
+    },
+    {
+      "consequence": "an inactive Flow cannot be launched by an action",
+      "drift_class": "target_inactive",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": false,
+      "severity": "fatal"
+    },
+    {
+      "consequence": "the GenAiFunction reference states the planner returns random responses",
+      "drift_class": "no_planner_output",
+      "evidence": "documented",
+      "fixture_count": 1,
+      "name_visible": false,
+      "severity": "fatal"
+    },
+    {
+      "consequence": "the topic promises an action the planner cannot find",
+      "drift_class": "dangling_topic_function",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "fatal"
+    },
+    {
+      "consequence": "the planner collects a value that is silently dropped",
+      "drift_class": "orphan_input",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the planner can never supply it, so the target always sees null",
+      "drift_class": "uncovered_input",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the planner can never supply a value Apex insists on",
+      "drift_class": "missing_required_input",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the planner may call the action without a value Apex insists on",
+      "drift_class": "required_not_enforced",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": false,
+      "severity": "warn"
+    },
+    {
+      "consequence": "validation is weakened, widened or lost at the boundary",
+      "drift_class": "type_mismatch",
+      "evidence": "inferred",
+      "fixture_count": 2,
+      "name_visible": false,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the planner reasons over a field that is always empty",
+      "drift_class": "orphan_output",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the reference caps text types at 250 characters",
+      "drift_class": "text_cap_exceeded",
+      "evidence": "documented",
+      "fixture_count": 1,
+      "name_visible": false,
+      "severity": "warn"
+    },
+    {
+      "consequence": "the planner never sees it; the action is dead metadata",
+      "drift_class": "unreachable_action",
+      "evidence": "inferred",
+      "fixture_count": 1,
+      "name_visible": true,
+      "severity": "info"
+    }
+  ]
+}

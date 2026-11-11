@@ -1,0 +1,34 @@
+{
+  "actions_total": 17,
+  "by_reason": {
+    "Contact is an SObject": 1,
+    "SObject variable": 1
+  },
+  "by_target_type": {
+    "apex": 1,
+    "flow": 1
+  },
+  "items": [
+    {
+      "action": "Merge_Duplicate_Contacts",
+      "declared_type": "Contact",
+      "reason": "Contact is an SObject; no lightning:type carries records",
+      "side": "input",
+      "variable": "primary"
+    },
+    {
+      "action": "Schedule_Callback",
+      "declared_type": "SObject<Case>",
+      "reason": "SObject variable; no lightning:type carries records",
+      "side": "input",
+      "variable": "caseRecord"
+    }
+  ],
+  "matched_pairs": 58,
+  "note": "undecidable is not drift and not clean; it is a pair the linter refused to judge because no lightning:type can carry the target's type, so nothing in the schema could be right or wrong about it",
+  "schema_properties_total": 63,
+  "undecidable_actions": 2,
+  "undecidable_properties": 2,
+  "undecidable_share_of_actions_pct": 11.8,
+  "undecidable_share_of_matched_pairs_pct": 3.4
+}

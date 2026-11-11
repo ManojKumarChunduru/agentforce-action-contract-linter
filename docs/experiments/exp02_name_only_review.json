@@ -1,0 +1,46 @@
+{
+  "findings_full": 13,
+  "findings_name_only": 7,
+  "invisible_by_class": {
+    "no_planner_output": 1,
+    "required_not_enforced": 1,
+    "target_inactive": 1,
+    "text_cap_exceeded": 1,
+    "type_mismatch": 2
+  },
+  "invisible_findings": [
+    {
+      "action": "Draft_Customer_Reply",
+      "drift_class": "text_cap_exceeded",
+      "property": "extraContext"
+    },
+    {
+      "action": "Escalate_Case",
+      "drift_class": "type_mismatch",
+      "property": "priorityLevel"
+    },
+    {
+      "action": "Find_Similar_Cases",
+      "drift_class": "no_planner_output",
+      "property": ""
+    },
+    {
+      "action": "Lookup_Product_Specs",
+      "drift_class": "target_inactive",
+      "property": ""
+    },
+    {
+      "action": "Summarize_Case",
+      "drift_class": "type_mismatch",
+      "property": "caseId"
+    },
+    {
+      "action": "Update_Contact_Preferences",
+      "drift_class": "required_not_enforced",
+      "property": "channel"
+    }
+  ],
+  "invisible_share_pct": 46.2,
+  "invisible_to_name_only": 6,
+  "note": "name-only reconciliation matches property names in both directions and nothing else; it sees missing targets, orphans, uncovered inputs, dangling topic functions and unreachable actions, and cannot see types, required-ness, caps, planner flags or Flow status"
+}

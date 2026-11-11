@@ -1,0 +1,43 @@
+{
+  "actions_total": 17,
+  "actions_with_findings": 12,
+  "apex_actions": 12,
+  "by_class": {
+    "dangling_topic_function": 1,
+    "missing_required_input": 1,
+    "missing_target": 1,
+    "no_planner_output": 1,
+    "orphan_input": 1,
+    "orphan_output": 1,
+    "required_not_enforced": 1,
+    "target_inactive": 1,
+    "text_cap_exceeded": 1,
+    "type_mismatch": 2,
+    "uncovered_input": 1,
+    "unreachable_action": 1
+  },
+  "by_severity": {
+    "fatal": 4,
+    "info": 1,
+    "warn": 8
+  },
+  "by_target_type": {
+    "apex": 9,
+    "flow": 3,
+    "topic": 1
+  },
+  "clean_actions": 3,
+  "contract_drifted_actions": 11,
+  "findings_total": 13,
+  "flow_actions": 5,
+  "ground_truth": {
+    "false_negative": 0,
+    "false_positive": 0,
+    "note": "a planted fixture can only show the linter finds what was planted; a measured zero false positives over N planted drifts means a rate below 1/N, not zero",
+    "planted": 13,
+    "resolution_floor": 0.0769,
+    "true_positive": 13
+  },
+  "planners_total": 1,
+  "topics_total": 4
+}
