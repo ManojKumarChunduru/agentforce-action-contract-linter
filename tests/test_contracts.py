@@ -137,11 +137,11 @@ def test_a_required_target_input_absent_from_the_schema_is_missing_required_inpu
     assert f.property_name == "b" and f.detail == "absent"
 
 
-def test_a_required_target_input_that_is_optional_in_the_schema_is_missing_required_input(builder):
+def test_a_required_target_input_that_is_optional_in_the_schema_is_required_not_enforced(builder):
     builder.apex("A", [("String", "a", True)], [("Boolean", "ok")])
     builder.action("Act", "A", input=input_schema({"a": prop(T)}), output=clean_output())
     reachable(builder, "Act")
-    assert only(builder.report(), "missing_required_input").detail == "optional_in_schema"
+    assert only(builder.report(), "required_not_enforced").detail == "optional_in_schema"
 
 
 def test_an_action_with_no_input_schema_reports_every_target_input_as_uncovered(builder):
@@ -327,6 +327,16 @@ def test_name_only_mode_cannot_see_a_missing_planner_flag(builder):
     builder.action("Act", "A", output=output_schema({"ok": prop(BOOL)}))
     reachable(builder, "Act")
     assert classes(builder.report(name_only=True)) == []
+
+
+def test_the_name_visible_flag_matches_what_name_only_mode_reports(fixture_project):
+    full = reconcile(fixture_project)
+    name_only = reconcile(fixture_project, name_only=True)
+    visible = {f.drift_class for f in name_only.findings}
+    for dc in DRIFT_CLASSES.values():
+        present_in_full = any(f.drift_class == dc.name for f in full.findings)
+        if present_in_full:
+            assert (dc.name in visible) == dc.name_visible, dc.name
 
 
 # ---------------------------------------------------------------- the fixture against ground truth

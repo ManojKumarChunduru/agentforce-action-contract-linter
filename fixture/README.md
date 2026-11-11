@@ -1,7 +1,7 @@
 # The fixture org
 
 A small SFDX project that is the linter's corpus: one agent (`Service_Agent`), four topics,
-sixteen actions, twelve Apex classes and five Flows. It is committed source, not a download, so
+seventeen actions, thirteen Apex classes and five Flows. It is committed source, not a download, so
 every number in the repository can be reproduced offline with `afcl lint fixture`.
 
 `EXPECTED_DRIFTS.json` is the ground truth. Every drift below was planted deliberately, one per
@@ -19,7 +19,8 @@ class, and the test suite asserts the linter reports exactly this set.
 | Track_Shipment | ShipmentTrackerV2 (Apex) | the class does not exist; `ShipmentTracker` does | `genAiFunctions/Track_Shipment` |
 | Get_Order_History | OrderHistoryService (Apex) | schema input `includeCancelled` has no Apex variable | `input/schema.json` |
 | Cancel_Order | Cancel_Order (Flow) | Flow input `cancellationReason` is not in the schema | `flows/Cancel_Order.flow-meta.xml` |
-| Update_Contact_Preferences | ContactPreferenceUpdater (Apex) | `channel` is `required=true` in Apex and absent from the schema's `required` list | `input/schema.json` |
+| Update_Contact_Preferences | ContactPreferenceUpdater (Apex) | `channel` is `required=true` in Apex and present in the schema but not in its `required` list | `input/schema.json` |
+| Log_Interaction | InteractionLogger (Apex) | `channel` is `required=true` in Apex and has no schema property at all | `input/schema.json` |
 | Find_Similar_Cases | SimilarCaseFinder (Apex) | no output property is marked `copilotAction:isUsedByPlanner` | `output/schema.json` |
 | Get_Account_Health | AccountHealthScorer (Apex) | schema output `riskLevel` is never produced | `output/schema.json` |
 | Draft_Customer_Reply | ReplyDrafter (Apex) | `extraContext` declares `maxLength` 2000 against a documented cap of 250 | `input/schema.json` |

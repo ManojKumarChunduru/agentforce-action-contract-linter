@@ -66,7 +66,7 @@ def test_summary_rows_are_ordered_fatal_then_warn_then_info():
 
 def test_the_json_payload_carries_totals_and_every_finding(fixture_report):
     data = json.loads(to_json(fixture_report))
-    assert data["totals"]["actions"] == 16
+    assert data["totals"]["actions"] == 17
     assert data["totals"]["findings"] == len(fixture_report.findings)
     assert len(data["findings"]) == len(fixture_report.findings)
     assert all("severity" in f for f in data["findings"])

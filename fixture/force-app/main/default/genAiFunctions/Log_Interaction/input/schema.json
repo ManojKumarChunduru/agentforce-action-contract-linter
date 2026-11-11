@@ -1,0 +1,18 @@
+{
+  "lightning:type": "lightning__objectType",
+  "required": [
+    "contactId"
+  ],
+  "properties": {
+    "contactId": {
+      "title": "Contact Id",
+      "description": "Contact the interaction is with",
+      "lightning:type": "lightning__recordIdType"
+    },
+    "notes": {
+      "title": "Notes",
+      "description": "What was discussed",
+      "lightning:type": "lightning__multilineTextType"
+    }
+  }
+}

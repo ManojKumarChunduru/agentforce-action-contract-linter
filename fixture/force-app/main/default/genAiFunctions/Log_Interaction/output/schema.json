@@ -1,0 +1,11 @@
+{
+  "lightning:type": "lightning__objectType",
+  "properties": {
+    "interactionId": {
+      "title": "Interaction Id",
+      "description": "Id of the logged interaction",
+      "lightning:type": "lightning__recordIdType",
+      "copilotAction:isUsedByPlanner": true
+    }
+  }
+}

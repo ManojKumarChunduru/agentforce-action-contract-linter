@@ -12,6 +12,9 @@
     <genAiFunctions>
         <functionName>Merge_Duplicate_Contacts</functionName>
     </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Log_Interaction</functionName>
+    </genAiFunctions>
     <genAiPluginInstructions>
         <description>Confirm with the rep before merging contacts.</description>
         <developerName>Account_Insights_instruction0</developerName>

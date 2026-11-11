@@ -1,6 +1,6 @@
 {
   "note": "Ground truth for the fixture org. Every entry was planted on purpose; tests assert the linter reports exactly this set and nothing else.",
-  "actions_total": 16,
+  "actions_total": 17,
   "topics_total": 4,
   "planners_total": 1,
   "clean_actions": ["Get_Case_Status", "Create_Case", "Send_Survey"],
@@ -16,7 +16,8 @@
     {"drift_class": "missing_target", "action": "Track_Shipment", "property_name": "", "detail_prefix": "not in project"},
     {"drift_class": "orphan_input", "action": "Get_Order_History", "property_name": "includeCancelled", "detail_prefix": ""},
     {"drift_class": "uncovered_input", "action": "Cancel_Order", "property_name": "cancellationReason", "detail_prefix": ""},
-    {"drift_class": "missing_required_input", "action": "Update_Contact_Preferences", "property_name": "channel", "detail_prefix": "optional_in_schema"},
+    {"drift_class": "required_not_enforced", "action": "Update_Contact_Preferences", "property_name": "channel", "detail_prefix": "optional_in_schema"},
+    {"drift_class": "missing_required_input", "action": "Log_Interaction", "property_name": "channel", "detail_prefix": "absent"},
     {"drift_class": "no_planner_output", "action": "Find_Similar_Cases", "property_name": "", "detail_prefix": ""},
     {"drift_class": "orphan_output", "action": "Get_Account_Health", "property_name": "riskLevel", "detail_prefix": ""},
     {"drift_class": "text_cap_exceeded", "action": "Draft_Customer_Reply", "property_name": "extraContext", "detail_prefix": "2000"},

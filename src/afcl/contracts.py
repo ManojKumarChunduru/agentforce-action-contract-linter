@@ -104,10 +104,17 @@ DRIFT_CLASSES: dict[str, DriftClass] = {
             "missing_required_input",
             WARN,
             INFERRED,
-            "an @InvocableVariable(required=true) is absent from the schema or not in its "
-            "required list",
-            "the planner may call the action without a value Apex insists on",
+            "an @InvocableVariable(required=true) has no property in the schema at all",
+            "the planner can never supply a value Apex insists on",
             True,
+        ),
+        DriftClass(
+            "required_not_enforced",
+            WARN,
+            INFERRED,
+            "an @InvocableVariable(required=true) is in the schema but not in its required list",
+            "the planner may call the action without a value Apex insists on",
+            False,
         ),
         DriftClass(
             "type_mismatch",
@@ -266,7 +273,7 @@ def _reconcile_inputs(
         if var.required and not prop.required and not name_only:
             findings.append(
                 Finding(
-                    "missing_required_input",
+                    "required_not_enforced",
                     message=(
                         f"input {name!r} is required by {target.name} but optional in the schema"
                     ),
