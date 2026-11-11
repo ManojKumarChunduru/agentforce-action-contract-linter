@@ -1,0 +1,158 @@
+{
+  "metrics": {
+    "tests_total": 236,
+    "coverage_line_pct": 99.5,
+    "actions_total": 17,
+    "topics_total": 4,
+    "apex_actions": 12,
+    "flow_actions": 5,
+    "fixture_apex_classes": 13,
+    "fixture_flows": 5,
+    "findings_total": 13,
+    "actions_with_findings": 12,
+    "contract_drifted_actions": 11,
+    "clean_actions": 3,
+    "drift_classes_total": 12,
+    "type_mismatch_count": 2,
+    "planted_drifts": 13,
+    "ground_truth_matched": 13,
+    "name_only_visible": 7,
+    "name_only_invisible": 6,
+    "name_only_invisible_pct": 46.2,
+    "matched_pairs": 58,
+    "undecidable_properties": 2,
+    "undecidable_actions": 2,
+    "undecidable_actions_pct": 11.8,
+    "undecidable_pairs_pct": 3.4,
+    "classes_documented": 2,
+    "classes_inferred": 10,
+    "fatal_classes": 4,
+    "fatal_inferred": 3,
+    "fatal_documented": 1,
+    "text_cap": 250,
+    "coverage_floor_pct": 95
+  },
+  "anchors": {
+    "tests_total": [
+      "{} tests"
+    ],
+    "coverage_line_pct": [
+      "{}% line coverage"
+    ],
+    "actions_total": [
+      "{} actions"
+    ],
+    "topics_total": [
+      "{} topics"
+    ],
+    "apex_actions": [
+      "{} backed by Apex"
+    ],
+    "flow_actions": [
+      "{} backed by Flow"
+    ],
+    "fixture_apex_classes": [
+      "{} Apex classes"
+    ],
+    "fixture_flows": [
+      "{} Flows"
+    ],
+    "findings_total": [
+      "{} findings"
+    ],
+    "actions_with_findings": [
+      "across {} of {actions_total} actions"
+    ],
+    "contract_drifted_actions": [
+      "{} with contract drift"
+    ],
+    "clean_actions": [
+      "{} clean actions",
+      "{} are clean"
+    ],
+    "drift_classes_total": [
+      "{} drift classes"
+    ],
+    "type_mismatch_count": [
+      "{} type mismatches"
+    ],
+    "planted_drifts": [
+      "{} planted drifts",
+      "floor of 1/{}",
+      "1/{} on this fixture"
+    ],
+    "ground_truth_matched": [
+      "{} of {planted_drifts} planted"
+    ],
+    "name_only_visible": [
+      "review sees {}",
+      "sees {} of {findings_total}"
+    ],
+    "name_only_invisible": [
+      "misses {}",
+      "{} invisible",
+      "the {} it misses"
+    ],
+    "name_only_invisible_pct": [
+      "{}% of the findings",
+      "({}%) are invisible"
+    ],
+    "matched_pairs": [
+      "{} matched pairs",
+      "of {} pairs"
+    ],
+    "undecidable_properties": [
+      "{} undecidable properties",
+      "{} properties it cannot"
+    ],
+    "undecidable_actions": [
+      "{} of {actions_total} actions are undecidable",
+      "{} undecidable actions"
+    ],
+    "undecidable_actions_pct": [
+      "{}% of actions",
+      "({}%) are undecidable"
+    ],
+    "undecidable_pairs_pct": [
+      "{}% of matched pairs"
+    ],
+    "classes_documented": [
+      "{} of {drift_classes_total} classes",
+      "{} documented classes"
+    ],
+    "classes_inferred": [
+      "{} inferred classes",
+      "{} are inferred"
+    ],
+    "fatal_classes": [
+      "{} fatal classes",
+      "of {} fatal"
+    ],
+    "fatal_inferred": [
+      "{} of {fatal_classes} fatal"
+    ],
+    "fatal_documented": [
+      "{} fatal class rests",
+      "only {} of the fatal"
+    ],
+    "text_cap": [
+      "cap of {}",
+      "{} characters"
+    ],
+    "coverage_floor_pct": [
+      "{}% floor",
+      "floor of {}%"
+    ]
+  },
+  "checked_documents": [
+    "README.md",
+    "docs/defense-guide.md",
+    "fixture/README.md",
+    "docs/adr/ADR-001-reconcile-by-name-and-type.md",
+    "docs/adr/ADR-002-invocable-subset-extractor.md",
+    "docs/adr/ADR-003-severity-apart-from-evidence.md",
+    "docs/adr/ADR-004-standard-library-only.md",
+    "docs/adr/ADR-005-what-the-fixture-cannot-establish.md"
+  ],
+  "note": "every value here is produced by running the suite and the experiments"
+}

@@ -1,0 +1,142 @@
+{
+  "note": "every line in demo.gif is captured output from these commands",
+  "segments": [
+    {
+      "command": "afcl lint fixture",
+      "argv": [
+        "/usr/local/bin/python",
+        "-m",
+        "afcl",
+        "lint",
+        "fixture"
+      ],
+      "exit_code": 1,
+      "seconds": 0.064,
+      "lines": [
+        "agentforce action contract linter: DRIFT",
+        "  actions 17, topics 4, planners 1",
+        "  findings 13 across 12 actions; undecidable properties 2 across 2 actions",
+        "",
+        "  class                      severity  evidence    count",
+        "  dangling_topic_function    fatal     inferred    1",
+        "  missing_target             fatal     inferred    1",
+        "  no_planner_output          fatal     documented  1",
+        "  target_inactive            fatal     inferred    1",
+        "  missing_required_input     warn      inferred    1",
+        "  orphan_input               warn      inferred    1",
+        "  orphan_output              warn      inferred    1",
+        "  required_not_enforced      warn      inferred    1",
+        "  text_cap_exceeded          warn      documented  1",
+        "  type_mismatch              warn      inferred    2",
+        "  uncovered_input            warn      inferred    1",
+        "  unreachable_action         info      inferred    1",
+        "",
+        "findings",
+        "  [fatal] dangling_topic_function  Apply_Discount: topic Order_Support lists 'Apply_Discount', which is not an action",
+        "  [fatal] missing_target           Track_Shipment: apex target 'ShipmentTrackerV2' (not in project)",
+        "  [fatal] no_planner_output        Find_Similar_Cases: no output property of Find_Similar_Cases is marked copilotAction:isUsedByPlanner",
+        "  [fatal] target_inactive          Lookup_Product_Specs: Flow Lookup_Product_Specs is not Active",
+        "  [warn ] missing_required_input   Log_Interaction: input 'channel' is required by InteractionLogger and absent from the schema (absent)",
+        "  [warn ] orphan_input             Get_Order_History: input 'includeCancelled' has no variable on OrderHistoryService",
+        "... (11 more lines)"
+      ]
+    },
+    {
+      "command": "afcl lint fixture --format json | python -c 'print totals'",
+      "argv": [
+        "bash",
+        "-c",
+        "/usr/local/bin/python -m afcl lint fixture --format json | /usr/local/bin/python -c \"import json,sys; d=json.load(sys.stdin); print(json.dumps(d['totals'], indent=2))\""
+      ],
+      "exit_code": 0,
+      "seconds": 0.076,
+      "lines": [
+        "{",
+        "  \"actions\": 17,",
+        "  \"topics\": 4,",
+        "  \"planners\": 1,",
+        "  \"findings\": 13,",
+        "  \"actions_with_findings\": 12,",
+        "  \"undecidable_properties\": 2,",
+        "  \"actions_undecidable\": 2",
+        "}"
+      ]
+    },
+    {
+      "command": "python experiments/exp02_name_only_review.py",
+      "argv": [
+        "/usr/local/bin/python",
+        "experiments/exp02_name_only_review.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.06,
+      "lines": [
+        "invisible to a name-only review  count",
+        "-------------------------------  -----",
+        "no_planner_output                1    ",
+        "required_not_enforced            1    ",
+        "target_inactive                  1    ",
+        "text_cap_exceeded                1    ",
+        "type_mismatch                    2    ",
+        "",
+        "name-only review sees 7 of 13 findings; 6 (46.2%) are invisible to it.",
+        "wrote docs/experiments/exp02_name_only_review.json"
+      ]
+    },
+    {
+      "command": "python experiments/exp03_undecidable.py",
+      "argv": [
+        "/usr/local/bin/python",
+        "experiments/exp03_undecidable.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.054,
+      "lines": [
+        "action                    variable    declared type  reason                                                  ",
+        "------------------------  ----------  -------------  --------------------------------------------------------",
+        "Merge_Duplicate_Contacts  primary     Contact        Contact is an SObject; no lightning:type carries records",
+        "Schedule_Callback         caseRecord  SObject<Case>  SObject variable; no lightning:type carries records     ",
+        "",
+        "2 of 58 matched pairs (3.4%) and 2 of 17 actions (11.8%) are undecidable.",
+        "wrote docs/experiments/exp03_undecidable.json"
+      ]
+    },
+    {
+      "command": "make receipts",
+      "argv": [
+        "make",
+        "receipts"
+      ],
+      "exit_code": 0,
+      "seconds": 0.342,
+      "lines": [
+        "python3 tools/collect_metrics.py --skip-tests",
+        "tests_total                  225",
+        "coverage_line_pct            99.5",
+        "actions_total                17",
+        "topics_total                 4",
+        "apex_actions                 12",
+        "flow_actions                 5",
+        "fixture_apex_classes         13",
+        "fixture_flows                5",
+        "findings_total               13",
+        "actions_with_findings        12",
+        "contract_drifted_actions     11",
+        "clean_actions                3",
+        "drift_classes_total          12",
+        "type_mismatch_count          2",
+        "planted_drifts               13",
+        "ground_truth_matched         13",
+        "name_only_visible            7",
+        "name_only_invisible          6",
+        "name_only_invisible_pct      46.2",
+        "matched_pairs                58",
+        "undecidable_properties       2",
+        "undecidable_actions          2",
+        "undecidable_actions_pct      11.8",
+        "undecidable_pairs_pct        3.4",
+        "... (10 more lines)"
+      ]
+    }
+  ]
+}
