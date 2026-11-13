@@ -188,7 +188,6 @@ def main() -> int:
         "anchors": ANCHORS,
         "checked_documents": [
             "README.md",
-            "docs/defense-guide.md",
             "fixture/README.md",
             *sorted(str(p.relative_to(REPO)) for p in (REPO / "docs" / "adr").glob("*.md")),
         ],

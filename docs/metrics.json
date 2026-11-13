@@ -146,7 +146,6 @@
   },
   "checked_documents": [
     "README.md",
-    "docs/defense-guide.md",
     "fixture/README.md",
     "docs/adr/ADR-001-reconcile-by-name-and-type.md",
     "docs/adr/ADR-002-invocable-subset-extractor.md",

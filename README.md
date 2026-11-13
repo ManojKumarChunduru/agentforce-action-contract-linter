@@ -247,7 +247,7 @@ src/afcl/
 fixture/         the committed org and its ground truth
 experiments/     exp01 census, exp02 name-only, exp03 undecidable, exp04 severity evidence
 tools/           collect_metrics, check_numbers, render_architecture, capture_screenshots, record_demo
-docs/            adr/, experiments/*.json, metrics.json, policy.default.json, defense-guide.md, assets/, evidence/
+docs/            adr/, experiments/*.json, metrics.json, policy.default.json, assets/, evidence/
 tests/           250 tests, each named as the property it pins
 ```
 
@@ -267,7 +267,7 @@ checked.
 Make targets: `make lint`, `make test`, `make experiments`, `make receipts`, and `make verify`
 which runs all four. `make receipts` runs `tools/collect_metrics.py` (re-measures every figure
 from the test reports and the experiment JSON into `docs/metrics.json`) and
-`tools/check_numbers.py`, which holds this README, the defense guide and the ADRs to those
+`tools/check_numbers.py`, which holds this README, the fixture README and the ADRs to those
 figures. It matches anchor phrases rather than digits ("13 findings", "across 12 of 17 actions")
 because a digit search passes while the sentence around it has gone stale, it reports any
 number of 6 or more in prose that no metric produces, and it checks the drift class table above
